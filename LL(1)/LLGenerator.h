@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <set>
 
 const int TABLE_WIDTH = 8;
 
@@ -18,5 +19,5 @@ private:
 	Table m_table;
 	std::vector<std::string> m_nonThermals;
 	std::vector<std::string> m_rightSidesOfRule;
-	std::vector<std::string> m_guidingSets;
+	std::vector<std::set<std::string>> m_guidingSets;
 };

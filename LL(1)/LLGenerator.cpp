@@ -30,7 +30,25 @@ void LLGenerator::ReadRulesAndGuidingSets(std::ifstream& inputFile)
 			}
 			m_rightSidesOfRule.emplace_back(tempLine);
 			i++;
-
+			tempLine.clear();
+			std::set<std::string> guidingSet;
+			while (true)
+			{
+				if (i == lineLen)
+				{
+					guidingSet.insert(tempLine);
+					break;
+				}
+				tempLine += line[i];
+				i++;
+				if (line[i] == ',')
+				{
+					guidingSet.insert(tempLine);
+					i++;
+					tempLine.clear();
+				}
+			}
+			m_guidingSets.emplace_back(guidingSet);
 		}
 	}
 }
