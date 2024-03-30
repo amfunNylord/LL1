@@ -4,6 +4,8 @@
 #include <string>
 #include <fstream>
 #include <set>
+#include <sstream>
+#include "StringTrim.cpp"
 
 const int TABLE_WIDTH = 8;
 
@@ -14,6 +16,9 @@ class LLGenerator
 public:
 	Table GetTable() const;
 	void ReadRulesAndGuidingSets(std::ifstream& inputFile);
+	std::vector<std::string> GetNonThermals() const;
+	std::vector<std::string> GetRightSidesOfRule() const;
+	std::vector<std::set<std::string>> GetGuidingSets() const;
 
 private:
 	Table m_table;

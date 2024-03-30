@@ -5,50 +5,43 @@ Table LLGenerator::GetTable() const
 	return m_table;
 }
 
+std::vector<std::string> LLGenerator::GetNonThermals() const
+{
+	return m_nonThermals;
+}
+
+std::vector<std::string> LLGenerator::GetRightSidesOfRule() const
+{
+	return m_rightSidesOfRule;
+}
+
+std::vector<std::set<std::string>> LLGenerator::GetGuidingSets() const
+{
+	return m_guidingSets;
+}
+
 void LLGenerator::ReadRulesAndGuidingSets(std::ifstream& inputFile)
 {
 	std::string line;
 	while (std::getline(inputFile, line))
 	{
-		size_t i = 0;
-		size_t lineLen = line.size();
-		while (i < lineLen)
+		std::stringstream ss(line);
+		std::string tempLine;
+
+		std::getline(ss, tempLine, '-');
+		Trim(tempLine);
+		m_nonThermals.emplace_back(tempLine);
+
+		std::getline(ss, tempLine, '/');
+		Trim(tempLine);
+		m_rightSidesOfRule.emplace_back(tempLine);
+
+		std::set<std::string> guidingSet;
+		while (std::getline(ss, tempLine, ','))
 		{
-			std::string tempLine;
-			while (line[i] != '-')
-			{
-				tempLine += line[i];
-				i++;
-			}	
-			m_nonThermals.emplace_back(tempLine);
-			tempLine.clear();
-			i++;
-			while (line[i] != '/')
-			{
-				tempLine += line[i];
-				i++;
-			}
-			m_rightSidesOfRule.emplace_back(tempLine);
-			i++;
-			tempLine.clear();
-			std::set<std::string> guidingSet;
-			while (true)
-			{
-				if (i == lineLen)
-				{
-					guidingSet.insert(tempLine);
-					break;
-				}
-				tempLine += line[i];
-				i++;
-				if (line[i] == ',')
-				{
-					guidingSet.insert(tempLine);
-					i++;
-					tempLine.clear();
-				}
-			}
-			m_guidingSets.emplace_back(guidingSet);
+			Trim(tempLine);
+			guidingSet.insert(tempLine);
 		}
+		m_guidingSets.emplace_back(guidingSet);
 	}
 }

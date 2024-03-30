@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="LLGenerator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StringTrim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LLGenerator.h" />
