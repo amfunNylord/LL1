@@ -7,6 +7,16 @@
 #include <sstream>
 #include "StringTrim.cpp"
 
+const char YES = '1';
+const char NO = '0';
+const std::string HEADERS = "№;"
+							"Текущий символ;"
+							"Направляющие символы;"
+							"Сдвиг;"
+							"Ошибка;"
+							"Указатель;"
+							"Занести в Стек адрес следующей строки;"
+							"Конец разбора\n";
 const int TABLE_WIDTH = 8;
 
 using Table = std::vector<std::array<std::string, TABLE_WIDTH>>;
@@ -15,14 +25,12 @@ class LLGenerator
 {
 public:
 	Table GetTable() const;
+	Table FillTable() const;
 	void ReadRulesAndGuidingSets(std::ifstream& inputFile);
-	std::vector<std::string> GetNonThermals() const;
-	std::vector<std::string> GetRightSidesOfRule() const;
-	std::vector<std::set<std::string>> GetGuidingSets() const;
 
 private:
 	Table m_table;
-	std::vector<std::string> m_nonThermals;
+	std::vector<std::string> m_nonTherminals;
 	std::vector<std::string> m_rightSidesOfRule;
 	std::vector<std::set<std::string>> m_guidingSets;
 };

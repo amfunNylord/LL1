@@ -3,17 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-const char YES = '1';
-const char NO = '0';
-const std::string HEADERS = "№;"
-							"Текущий символ;"
-							"Направляющие символы;"
-							"Сдвиг;"
-							"Ошибка;"
-							"Указатель;"
-							"Занести в Стек адрес следующей строки;"
-							"Конец разбора\n";
-
 bool ReadInputFile(LLGenerator& generator, const std::string& inputFileName)
 {
 	std::ifstream inputFile(inputFileName);
@@ -27,39 +16,6 @@ bool ReadInputFile(LLGenerator& generator, const std::string& inputFileName)
 	generator.ReadRulesAndGuidingSets(inputFile);
 	inputFile.close();
 	return true;
-}
-
-Table FillTable(const LLGenerator& generator)
-{
-	const auto& nonTerminals = generator.GetNonThermals();
-	const auto& guidingSets = generator.GetGuidingSets();
-	const auto& rightSides = generator.GetRightSidesOfRule();
-	Table table;
-
-	for (size_t i = 0; i < nonTerminals.size(); ++i)
-	{
-		std::array<std::string, TABLE_WIDTH> row;
-		std::string guidingSymbols;
-
-		for (const auto& symbol : guidingSets[i])
-			guidingSymbols += symbol + ",";
-
-		if (!guidingSymbols.empty())
-			guidingSymbols.pop_back();
-
-		row[0] = std::to_string(i + 1);				// Номер
-		row[1] = nonTerminals[i];					// Текущий символ
-		row[2] = guidingSymbols;					// Направляющие символы
-		row[3] = NO;								// Сдвиг
-		row[4] = YES;								// Ошибка
-		row[5] = "null";							// Указатель
-		row[6] = NO;								// Занести в Стек адрес следующей строки
-		row[7] = NO;								// Конец разбора
-
-		table.push_back(row);
-	}
-
-	return table;
 }
 
 bool WriteOutputFile(const Table& table, const std::string& outputFileName)
@@ -93,7 +49,7 @@ int main()
     if (!ReadInputFile(generator, inputFileName))
 		return -1;
 
-	Table table = FillTable(generator);
+	Table table = generator.FillTable();
 
 	if (!WriteOutputFile(table, outputFileName))
 		return -1;
