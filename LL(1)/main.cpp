@@ -47,14 +47,14 @@ Table FillTable(const LLGenerator& generator)
 		if (!guidingSymbols.empty())
 			guidingSymbols.pop_back();
 
-		for (size_t j = 3; j < TABLE_WIDTH; ++j)
-			row[j] = NO;
-
 		row[0] = std::to_string(i + 1);				// Номер
 		row[1] = nonTerminals[i];					// Текущий символ
 		row[2] = guidingSymbols;					// Направляющие символы
+		row[3] = NO;								// Сдвиг
 		row[4] = YES;								// Ошибка
 		row[5] = "null";							// Указатель
+		row[6] = NO;								// Занести в Стек адрес следующей строки
+		row[7] = NO;								// Конец разбора
 
 		table.push_back(row);
 	}
@@ -95,7 +95,7 @@ int main()
 
 	Table table = FillTable(generator);
 
-	 if (!WriteOutputFile(table, outputFileName))
+	if (!WriteOutputFile(table, outputFileName))
 		return -1;
 
 	return 0;
