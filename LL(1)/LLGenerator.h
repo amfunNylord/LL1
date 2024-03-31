@@ -25,7 +25,7 @@ class LLGenerator
 {
 public:
 	Table GetTable() const;
-	Table FillTable() const;
+	void FillTable();
 	void ReadRulesAndGuidingSets(std::ifstream& inputFile);
 
 private:

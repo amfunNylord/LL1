@@ -49,7 +49,8 @@ int main()
     if (!ReadInputFile(generator, inputFileName))
 		return -1;
 
-	Table table = generator.FillTable();
+	generator.FillTable();
+	Table table = generator.GetTable();
 
 	if (!WriteOutputFile(table, outputFileName))
 		return -1;
