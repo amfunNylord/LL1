@@ -29,6 +29,9 @@ public:
 	void ReadRulesAndGuidingSets(std::ifstream& inputFile);
 
 private:
+	bool IsNonTherminal(const std::string& el);
+	int CalculateCountOfSymbols(const std::string& rightSidesOfRule);
+
 	Table m_table;
 	std::vector<std::string> m_nonTherminals;
 	std::vector<std::string> m_rightSidesOfRule;
