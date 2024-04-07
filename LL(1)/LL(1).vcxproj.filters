@@ -24,9 +24,15 @@
     <ClCompile Include="StringTrim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GuidingSetsGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LLGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuidingSetsGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

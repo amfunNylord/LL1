@@ -1,4 +1,5 @@
 #include "LLGenerator.h"
+#include "GuidingSetsGenerator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -40,7 +41,7 @@ bool WriteOutputFile(const Table& table, const std::string& outputFileName)
 
 int main()
 {
-	setlocale(LC_ALL, "Russian");
+	/*setlocale(LC_ALL, "Russian");
 	LLGenerator generator;
 
 	std::string inputFileName = "../GrammarExamples/grammar1.txt";
@@ -53,7 +54,13 @@ int main()
 	Table table = generator.GetTable();
 
 	if (!WriteOutputFile(table, outputFileName))
-		return -1;
+		return -1;*/
+
+	GuidingSetsGenerator gen;
+	std::string inputFileName = "../GuidingSetsExamples/grammar1.txt";
+	std::ifstream inputFile(inputFileName);
+	gen.ReadRules(inputFile);
+	gen.Generate();
 
 	return 0;
 }

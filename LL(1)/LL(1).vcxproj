@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GuidingSetsGenerator.cpp" />
     <ClCompile Include="LLGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StringTrim.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GuidingSetsGenerator.h" />
     <ClInclude Include="LLGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
