@@ -31,11 +31,6 @@ void LLGenerator::ReadRulesAndGuidingSets(std::ifstream& inputFile)
 	}
 }
 
-bool LLGenerator::IsNonTherminal(const std::string& el)
-{
-	return (el.size() >= 2 && el[0] == '<' && el[el.size() - 1] == '>') ? true : false;
-}
-
 int LLGenerator::CalculateCountOfSymbols(const std::string& rightSidesOfRule)
 {
 	std::stringstream ss(rightSidesOfRule);
@@ -73,7 +68,7 @@ void LLGenerator::FillTable()
 		row[2] = guidingSymbols;				// Направляющие символы
 		row[3] = NO;							// Сдвиг
 		row[4] = YES;							// Ошибка
-		row[5] = "";						// Указатель
+		row[5] = "";							// Указатель
 		row[6] = NO;							// Занести в Стек адрес следующей строки
 		row[7] = NO;							// Конец разбора
 
@@ -217,7 +212,7 @@ void LLGenerator::FillTable()
 	// правая часть
 	for (int i = int(m_nonTherminals.size()); i < rowNumber - 1; i++)
 	{
-		if (IsNonTherminal(m_table[i][1]))
+		if (IsNonTerminal(m_table[i][1]))
 		{
 			for (size_t j = 0; j < m_nonTherminals.size(); j++)
 			{
@@ -237,5 +232,4 @@ void LLGenerator::FillTable()
 			m_table[i][5] = std::to_string(i + 2); 
 		}
 	}
-	
 }

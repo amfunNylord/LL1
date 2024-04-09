@@ -1,3 +1,6 @@
+#ifndef STRING_UTILS_H
+#define STRING_UTILS_H
+
 #include <algorithm>
 #include <string>
 
@@ -13,3 +16,10 @@ inline void Trim(std::string& str)
 		return !std::isspace(ch);
 	}).base(), str.end());
 }
+
+inline bool IsNonTerminal(const std::string& el)
+{
+	return (el.size() >= 2 && el[0] == '<' && el[el.size() - 1] == '>') ? true : false;
+}
+
+#endif

@@ -130,7 +130,7 @@
     <ClCompile Include="GuidingSetsGenerator.cpp" />
     <ClCompile Include="LLGenerator.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="StringTrim.cpp" />
+    <ClCompile Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GuidingSetsGenerator.h" />

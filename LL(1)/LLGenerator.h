@@ -5,7 +5,7 @@
 #include <fstream>
 #include <set>
 #include <sstream>
-#include "StringTrim.cpp"
+#include "Utils.h"
 
 const char YES = '1';
 const char NO = '0';
@@ -30,7 +30,6 @@ public:
 	void ReadRulesAndGuidingSets(std::ifstream& inputFile);
 
 private:
-	bool IsNonTherminal(const std::string& el);
 	int CalculateCountOfSymbols(const std::string& rightSidesOfRule);
 
 	Table m_table;

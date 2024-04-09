@@ -4,63 +4,44 @@
 #include <fstream>
 #include <sstream>
 
-bool ReadInputFile(LLGenerator& generator, const std::string& inputFileName)
-{
-	std::ifstream inputFile(inputFileName);
-
-	if (!inputFile.is_open())
-	{
-		std::cerr << "Ошибка открытия файла для чтения!\n";
-		return false;
-	}
-
-	generator.ReadRulesAndGuidingSets(inputFile);
-	inputFile.close();
-	return true;
-}
-
-bool WriteOutputFile(const Table& table, const std::string& outputFileName)
-{
-	std::ofstream outputFile(outputFileName);
-	if (!outputFile.is_open())
-	{
-		std::cerr << "Ошибка открытия файла для записи!\n";
-		return false;
-	}
-
-	outputFile << HEADERS;
-	for (const auto& row : table)
-	{
-		std::copy(row.begin(), row.end(), std::ostream_iterator<std::string>(outputFile, ";"));
-		outputFile << "\n";
-	}
-
-	outputFile.close();
-	return true;
-}
-
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	LLGenerator generator;
-
-	std::string inputFileName = "../GrammarExamples/grammar1.txt";
-	std::string outputFileName = "output.csv";
-
-    if (!ReadInputFile(generator, inputFileName))
-		return -1;
-
-	generator.FillTable();
-	Table table = generator.GetTable();
-
-	if (!WriteOutputFile(table, outputFileName))
-		return -1;
-
-	/*GuidingSetsGenerator gen;
 	std::string inputFileName = "../GuidingSetsExamples/grammar1.txt";
+	std::string outputFileName = "guidingSets.txt";
+	GuidingSetsGenerator generator;
+
 	std::ifstream inputFile(inputFileName);
-	gen.ReadRules(inputFile);
-	gen.Generate();*/
+	generator.ReadRules(inputFile);
+	generator.Generate();
+	generator.Fill(outputFileName);
+
+	auto nonTerminals = generator.GetNonTerminals();
+	auto rightSidesOfRule = generator.GetRightSidesOfRule();
+	auto guidingSets = generator.GetGuidingSets();
+
+    std::cout << "Список нетерминальных символов:" << std::endl;
+	for (size_t i = 0; i < nonTerminals.size(); ++i)
+	{
+		std::cout << i + 1 << ". " << nonTerminals[i] << std::endl;
+	}
+
+	std::cout << "Правые части правил:" << std::endl;
+	for (size_t i = 0; i < rightSidesOfRule.size(); ++i)
+	{
+		std::cout << i + 1 << ". ";
+		for (const auto& symbol : rightSidesOfRule[i])
+		{
+			std::cout << symbol;
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << "Направляющие множества:" << std::endl;
+	for (size_t i = 0; i < guidingSets.size(); ++i)
+	{
+		std::cout << i + 1 << ". " << guidingSets[i] << std::endl;
+	}
 
 	return 0;
 }
