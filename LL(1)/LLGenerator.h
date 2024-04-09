@@ -18,6 +18,7 @@ const std::string HEADERS = "№;"
 							"Занести в Стек адрес следующей строки;"
 							"Конец разбора\n";
 const int TABLE_WIDTH = 8;
+const char END_TERMINAL = '=';
 
 using Table = std::vector<std::array<std::string, TABLE_WIDTH>>;
 

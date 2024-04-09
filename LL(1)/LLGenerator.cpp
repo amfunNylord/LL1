@@ -90,6 +90,13 @@ void LLGenerator::FillTable()
 		m_table.push_back(row);
 	}
 
+
+	if (m_rightSidesOfRule[0][m_rightSidesOfRule[0].size() - 1] != END_TERMINAL)
+	{
+		
+		m_rightSidesOfRule[0] += " " + END_TERMINAL;
+	}
+
 	// Правая часть правила
 	for (size_t i = 0; i < m_nonTherminals.size(); ++i)
 	{
@@ -99,10 +106,6 @@ void LLGenerator::FillTable()
 		int index = 0;
 		while (std::getline(ss, element, ' '))
 		{
-			if (element == "|")
-			{
-				continue;
-			}
 			index++;
 			bool isTerminalSymbol = false;
 			bool isEmptySymbol = false;
@@ -154,7 +157,7 @@ void LLGenerator::FillTable()
 				row[4] = YES;							// Ошибка
 				row[5] = "null";						// Указатель
 				row[6] = NO;							// Занести в Стек адрес следующей строки
-				row[7] = NO;							// Конец разбора
+				row[7] = YES;							// Конец разбора
 
 				m_table.push_back(row);
 			}
@@ -210,10 +213,6 @@ void LLGenerator::FillTable()
 		int count = 0;
 		while (std::getline(ss, element, ' '))
 		{
-			if (element == "|")
-			{
-				continue;
-			}
 			count++;
 		}
 		m_table[i][5] = std::to_string(index);
