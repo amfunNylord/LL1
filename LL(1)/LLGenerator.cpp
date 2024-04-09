@@ -189,21 +189,16 @@ void LLGenerator::FillTable()
 				row[3] = NO;							// Сдвиг
 				row[4] = YES;							// Ошибка
 				row[5] = "null";						// Указатель
-				row[6] = YES;							// Занести в Стек адрес следующей строки
+				row[6] = (index == countOfSymbols) ? NO : YES; // Занести в Стек адрес следующей строки							
 				row[7] = NO;							// Конец разбора
 
 				m_table.push_back(row);
 			}
 
 		}
-		/*if (m_table[m_table.size() - 1][1].size() >= 2 && m_table[m_table.size() - 1][1][0] == '<' && m_table[m_table.size() - 1][1][m_table[m_table.size() - 1][1].size() - 1] == '>')
-		{
-			m_table[m_table.size() - 1][6] = NO;
-		}*/
 	}
 
 	// указатели
-
 	// левая часть
 	int index = int(m_nonTherminals.size()) + 1;
 	for (size_t i = 0; i < m_nonTherminals.size(); ++i)
