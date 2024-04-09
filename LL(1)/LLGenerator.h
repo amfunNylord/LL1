@@ -33,7 +33,7 @@ private:
 	int CalculateCountOfSymbols(const std::string& rightSidesOfRule);
 
 	Table m_table;
-	std::vector<std::string> m_nonTherminals;
+	std::vector<std::string> m_nonTerminals;
 	std::vector<std::string> m_rightSidesOfRule;
 	std::vector<std::set<std::string>> m_guidingSets;
 };

@@ -15,7 +15,7 @@ void LLGenerator::ReadRulesAndGuidingSets(std::ifstream& inputFile)
 
 		std::getline(ss, tempLine, '-');
 		Trim(tempLine);
-		m_nonTherminals.emplace_back(tempLine);
+		m_nonTerminals.emplace_back(tempLine);
 
 		std::getline(ss, tempLine, '/');
 		Trim(tempLine);
@@ -52,7 +52,7 @@ void LLGenerator::FillTable()
 	int rowNumber = 1;
 
 	// Левая часть правила
-	for (size_t i = 0; i < m_nonTherminals.size(); ++i)
+	for (size_t i = 0; i < m_nonTerminals.size(); ++i)
 	{
 		std::array<std::string, 8> row;
 		std::string guidingSymbols;
@@ -64,7 +64,7 @@ void LLGenerator::FillTable()
 			guidingSymbols.pop_back();
 
 		row[0] = std::to_string(rowNumber++);	// Номер
-		row[1] = m_nonTherminals[i];			// Текущий символ
+		row[1] = m_nonTerminals[i];			// Текущий символ
 		row[2] = guidingSymbols;				// Направляющие символы
 		row[3] = NO;							// Сдвиг
 		row[4] = YES;							// Ошибка
@@ -73,10 +73,10 @@ void LLGenerator::FillTable()
 		row[7] = NO;							// Конец разбора
 
 		// Во всех строках альтернатив кроме последней ставится «нет», в последнюю «Да».
-		for (size_t j = i + 1; j < m_nonTherminals.size(); j++)
+		for (size_t j = i + 1; j < m_nonTerminals.size(); j++)
 		{
-			std::string currNonTerminal = m_nonTherminals[i];
-			if (currNonTerminal == m_nonTherminals[j])
+			std::string currNonTerminal = m_nonTerminals[i];
+			if (currNonTerminal == m_nonTerminals[j])
 			{
 				row[4] = NO;
 			}
@@ -93,7 +93,7 @@ void LLGenerator::FillTable()
 	}
 
 	// Правая часть правила
-	for (size_t i = 0; i < m_nonTherminals.size(); ++i)
+	for (size_t i = 0; i < m_nonTerminals.size(); ++i)
 	{
 		std::stringstream ss(m_rightSidesOfRule[i]);
 		std::string element;
@@ -163,9 +163,9 @@ void LLGenerator::FillTable()
 				std::string guidingSymbols;
 
 				// Множество направляющих символов для этого нетерминала
-				for (size_t j = 0; j < m_nonTherminals.size(); ++j)
+				for (size_t j = 0; j < m_nonTerminals.size(); ++j)
 				{
-					if (m_nonTherminals[j] == element)
+					if (m_nonTerminals[j] == element)
 					{
 						for (const auto& symbol : m_guidingSets[j])
 						{
@@ -195,8 +195,8 @@ void LLGenerator::FillTable()
 
 	// указатели
 	// левая часть
-	int index = int(m_nonTherminals.size()) + 1;
-	for (size_t i = 0; i < m_nonTherminals.size(); ++i)
+	int index = int(m_nonTerminals.size()) + 1;
+	for (size_t i = 0; i < m_nonTerminals.size(); ++i)
 	{
 		std::stringstream ss(m_rightSidesOfRule[i]);
 		std::string element;
@@ -210,11 +210,11 @@ void LLGenerator::FillTable()
 	}
 
 	// правая часть
-	for (int i = int(m_nonTherminals.size()); i < rowNumber - 1; i++)
+	for (int i = int(m_nonTerminals.size()); i < rowNumber - 1; i++)
 	{
 		if (IsNonTerminal(m_table[i][1]))
 		{
-			for (size_t j = 0; j < m_nonTherminals.size(); j++)
+			for (size_t j = 0; j < m_nonTerminals.size(); j++)
 			{
 				if (m_table[j][1] == m_table[i][1])
 				{
