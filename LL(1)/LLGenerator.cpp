@@ -150,7 +150,7 @@ void LLGenerator::FillTable()
 				row[2] = element;						// Направляющие символы
 				row[3] = NO;							// Сдвиг
 				row[4] = YES;							// Ошибка
-				row[5] = "null";						// Указатель
+				row[5] = "NULL";						// Указатель
 				row[6] = NO;							// Занести в Стек адрес следующей строки
 				row[7] = YES;							// Конец разбора
 
@@ -229,6 +229,10 @@ void LLGenerator::FillTable()
 		}
 		else if (m_table[i][5] != "NULL")
 		{
+			if (m_table[i][7] == "1")
+			{
+				continue;
+			}
 			m_table[i][5] = std::to_string(i + 2); 
 		}
 	}
