@@ -1,6 +1,8 @@
 #include "SyntaxSlider.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <stack>
 
 SyntaxSlider::SyntaxSlider(std::ifstream& table, const std::string& program)
 	: m_program(program)
@@ -39,4 +41,9 @@ SyntaxSlider::SyntaxSlider(std::ifstream& table, const std::string& program)
 
 void SyntaxSlider::Parse()
 {
+	std::stack<std::string> s;
+	std::stringstream ss(m_program);
+	std::string terminal;
+	ss >> terminal;
+
 }

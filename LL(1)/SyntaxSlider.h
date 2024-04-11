@@ -1,6 +1,7 @@
 #pragma once
 #include "Utils.h"
 #include <array>
+#include <vector>
 
 using Table = std::vector<std::array<std::string, 8>>;
 
