@@ -1,5 +1,6 @@
 #include "LLGenerator.h"
 #include "GuidingSetsGenerator.h"
+#include "SyntaxSlider.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -42,7 +43,7 @@ bool WriteOutputFile(const Table& table, const std::string& outputFileName)
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	LLGenerator generator;
+	/* LLGenerator generator;
 
 	std::string inputFileName = "../GrammarExamples/grammar1.txt";
 	std::string outputFileName = "output.csv";
@@ -54,13 +55,20 @@ int main()
 	Table table = generator.GetTable();
 
 	if (!WriteOutputFile(table, outputFileName))
-		return -1;
+		return -1;*/
 
 	/*GuidingSetsGenerator gen;
 	std::string inputFileName = "../GuidingSetsExamples/grammar1.txt";
 	std::ifstream inputFile(inputFileName);
 	gen.ReadRules(inputFile);
 	gen.Generate();*/
+
+	std::string program;
+	std::cout << "Enter program: ";
+	std::cin >> program;
+	
+	std::ifstream inputTable("output.csv");
+	SyntaxSlider syntaxSlider(inputTable, program);
 
 	return 0;
 }

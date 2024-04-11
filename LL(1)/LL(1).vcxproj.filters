@@ -27,12 +27,18 @@
     <ClCompile Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="SyntaxSlider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LLGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GuidingSetsGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SyntaxSlider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -130,11 +130,13 @@
     <ClCompile Include="GuidingSetsGenerator.cpp" />
     <ClCompile Include="LLGenerator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SyntaxSlider.cpp" />
     <ClCompile Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GuidingSetsGenerator.h" />
     <ClInclude Include="LLGenerator.h" />
+    <ClInclude Include="SyntaxSlider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
