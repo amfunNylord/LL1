@@ -65,10 +65,11 @@ int main()
 
 	std::string program;
 	std::cout << "Enter program: ";
-	std::cin >> program;
+	getline(std::cin, program);
 
 	std::ifstream inputTable("output.csv");
 	SyntaxSlider syntaxSlider(inputTable, program);
+	syntaxSlider.Parse();
 
 	return 0;
 }

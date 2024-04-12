@@ -12,6 +12,8 @@ public:
 	void Parse();
 
 private:
+	bool IsInGuidingSets(const std::string& str, const std::string& terminal);
+
 	std::string m_program;
 	Table m_table;
 };
