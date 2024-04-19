@@ -58,7 +58,7 @@ void SyntaxSlider::Parse()
 	{
 		if (s.empty() && program.empty() && m_table[currIndex - 1][7] == "1")
 		{
-			std::cout << "IT'S GOOD" << std::endl;
+			std::cout << "GOOD" << std::endl;
 			break;
 		}
 

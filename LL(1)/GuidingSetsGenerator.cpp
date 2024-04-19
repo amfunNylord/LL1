@@ -10,72 +10,171 @@ std::vector<std::string> GuidingSetsGenerator::GetRightSidesOfRule() const
 	return m_rightSidesOfRule;
 }
 
-std::vector<std::string> GuidingSetsGenerator::GetGuidingSets() const
+std::vector<std::set<std::string>> GuidingSetsGenerator::GetGuidingSets() const
 {
 	return m_guidingSets;
 }
 
-void GuidingSetsGenerator::Fill(const std::string& outputFileName)
+std::string GuidingSetsGenerator::GetEl(const std::string& line)
 {
-	std::ofstream outputFile(outputFileName);
-	if (!outputFile.is_open())
+	size_t i = 0;
+	std::string el;
+	while (i < line.size() && line[i] != ' ')
 	{
-		std::cerr << "Не удалось открыть файл для записи!" << std::endl;
-		return;
+		el += line[i];
+		i++;
 	}
+	return el;
+}
 
-	if (m_nonTerminals.size() != m_rightSidesOfRule.size() || m_nonTerminals.size() != m_guidingSets.size())
+void GuidingSetsGenerator::RemoveEl(std::string& line, const std::string& el)
+{
+	line.erase(0, el.size());
+}
+
+void GuidingSetsGenerator::GetGuidingSetsOfNonTerminal(size_t row)
+{
+	if (m_guidingSets[row].empty())
 	{
-		std::cerr << "Размеры данных не совпадают!" << std::endl;
-		return;
+		bool isNonTerminalSymbol = false;
+		std::string el = GetEl(m_rightSidesOfRule[row]);
+		for (size_t i = 0; i < m_nonTerminals.size(); i++)
+		{
+			if (m_nonTerminals[i] == el)
+			{
+				if (m_guidingSets[i].empty())
+				{
+					GetGuidingSetsOfNonTerminal(i);
+					m_guidingSets[row].insert(m_guidingSets[i].begin(), m_guidingSets[i].end()); 
+					break;
+				}
+				else
+				{
+					m_guidingSets[row].insert(m_guidingSets[i].begin(), m_guidingSets[i].end()); 
+				}
+			}
+		}
 	}
+}
 
-	for (size_t i = 0; i < m_nonTerminals.size(); ++i)
+void GuidingSetsGenerator::GetGuidingSetsForEmpty(const std::string& nonTerminal, const size_t& row)
+{
+	for (size_t i = 0; i < m_rightSidesOfRule.size(); i++)
 	{
-		outputFile << m_nonTerminals[i] << " - " << m_rightSidesOfRule[i] << " / " << m_guidingSets[i] << std::endl;
-	}
+		std::string rightSideOfRule = m_rightSidesOfRule[i];
+		while (!rightSideOfRule.empty())
+		{
+			std::string element = GetEl(rightSideOfRule);
+			RemoveEl(rightSideOfRule, element);
+			if (!rightSideOfRule.empty())
+			{
+				rightSideOfRule.erase(0, 1); // убираем пробел
+			}
+			if (nonTerminal == element && m_nonTerminals[i] != nonTerminal)
+			{
+				element = GetEl(rightSideOfRule);
+				if (element.empty())
+				{
+					std::set<std::string> guidingSet = GetGuidingSet(m_nonTerminals[i]);
 
-	outputFile.close();
+					m_guidingSets[row].insert(guidingSet.begin(), guidingSet.end());
+				}
+				else if (!IsNonTerminal(element))
+				{
+					m_guidingSets[row].insert(element);
+				}
+				else
+				{
+					std::vector<size_t> indexesOfNonTerminal;
+					for (size_t j = 0; j < m_nonTerminals.size(); j++)
+					{
+						if (m_nonTerminals[i] == nonTerminal)
+						{
+							indexesOfNonTerminal.emplace_back(i);
+						}
+					}
+					for (const auto& index : indexesOfNonTerminal)
+					{
+						m_guidingSets[row].insert(m_guidingSets[index].begin(), m_guidingSets[index].end());
+					}
+				}
+				break;
+			}
+		}
+	}
+}
+
+std::set<std::string> GuidingSetsGenerator::GetGuidingSet(const std::string& nonTerminal)
+{
+	std::set<std::string> returnableSet;
+	for (size_t i = 0; i < m_rightSidesOfRule.size(); i++)
+	{
+		std::string rightSideOfRule = m_rightSidesOfRule[i];
+		while (!rightSideOfRule.empty())
+		{
+			std::string element = GetEl(rightSideOfRule);
+			RemoveEl(rightSideOfRule, element);
+			if (!rightSideOfRule.empty())
+			{
+				rightSideOfRule.erase(0, 1); // убираем пробел
+			}
+			if (nonTerminal == element && m_nonTerminals[i] != nonTerminal)
+			{
+				element = GetEl(rightSideOfRule);
+				if (element.empty())
+				{
+					std::set<std::string> guidingSet = GetGuidingSet(m_nonTerminals[i]);
+					
+					returnableSet.insert(guidingSet.begin(), guidingSet.end());
+				}
+				else if (!IsNonTerminal(element))
+				{
+					returnableSet.insert(element);
+				}
+				else
+				{
+					std::vector<size_t> indexesOfNonTerminal;
+					for (size_t j = 0; j < m_nonTerminals.size(); j++)
+					{
+						if (m_nonTerminals[j] == element)
+						{
+							indexesOfNonTerminal.emplace_back(j);
+						}
+					}
+					for (const auto& index : indexesOfNonTerminal)
+					{
+						returnableSet.insert(m_guidingSets[index].begin(), m_guidingSets[index].end());
+					}
+				}
+			}
+		}
+	}
+	return returnableSet;
 }
 
 void GuidingSetsGenerator::Generate()
 {
-	for (size_t i = 0; i < m_nonTerminals.size(); ++i)
-    {
-		std::string currentNonTerminal = m_nonTerminals[i];
-		std::string rightSide = m_rightSidesOfRule[i];
-		std::stringstream ss(rightSide);
-		std::string element;
-		std::getline(ss, element, ' ');
+	m_guidingSets.resize(m_nonTerminals.size());
+	
+	for (size_t i = 0; i < m_rightSidesOfRule.size(); i++)
+	{
+		std::string el = GetEl(m_rightSidesOfRule[i]);
+		if (el != "e" && !IsNonTerminal(el))
+		{
+			std::set<std::string> s = { el };
+			m_guidingSets[i] = s;
+		}
+	}
 
-		bool isTerminalSymbol = false;
-		bool isEmptySymbol = false;
-		bool isNonTerminalSymbol = false;
+	// вызываем для первого нетерминала
+	GetGuidingSetsOfNonTerminal(0);
 
-		if (element == "e")
+	// заполняем для пустых переходов
+	for (size_t i = 0; i < m_rightSidesOfRule.size(); i++)
+	{
+		if (m_rightSidesOfRule[i] == "e")
 		{
-			isEmptySymbol = true;
-		}
-		else if (IsNonTerminal(element))
-		{
-			isNonTerminalSymbol = true;
-		}
-		else
-		{
-			isTerminalSymbol = true;
-		}
-
-		if (isTerminalSymbol)
-		{
-			m_guidingSets.emplace_back(element);
-		}
-		if (isEmptySymbol)
-		{
-			m_guidingSets.emplace_back("Пустой символ");
-		}
-		if (isNonTerminalSymbol)
-		{
-			m_guidingSets.emplace_back("Не терминальный символ");
+			GetGuidingSetsForEmpty(m_nonTerminals[i], i);
 		}
 	}
 }
@@ -96,11 +195,23 @@ void GuidingSetsGenerator::ReadRules(std::ifstream& inputFile)
 		Trim(tempStr);
 		m_rightSidesOfRule.emplace_back(tempStr);
 	}
-
-	EliminateLeftRecursion();
 }
 
-void GuidingSetsGenerator::EliminateLeftRecursion()
+void GuidingSetsGenerator::WriteResult(std::ofstream& outputFile)
 {
-
+	for (size_t i = 0; i < m_nonTerminals.size(); i++)
+	{
+		outputFile << m_nonTerminals[i] << " - " << m_rightSidesOfRule[i] << " / ";
+		size_t index = 0;
+		for (const auto& el : m_guidingSets[i])
+		{
+			index++;
+			outputFile << el;
+			if (index != m_guidingSets[i].size())
+			{
+				outputFile << ", ";
+			}
+		}
+		outputFile << std::endl;
+	}
 }

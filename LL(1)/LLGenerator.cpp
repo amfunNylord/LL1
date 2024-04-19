@@ -110,7 +110,7 @@ void LLGenerator::FillTable()
 			{
 				isEmptySymbol = true;
 			}
-			else if (element.size() >= 2 && element[0] == '<' && element[element.size() - 1] == '>')
+			else if (IsNonTerminal(element))
 			{
 				isNonTerminalSymbol = true;
 			}

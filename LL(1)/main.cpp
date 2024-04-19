@@ -42,11 +42,21 @@ bool WriteOutputFile(const Table& table, const std::string& outputFileName)
 
 int main()
 {
+	GuidingSetsGenerator guidingSetsGenerator;
+	std::string inputFileName = "../GuidingSetsExamples/grammar1.txt";
+	std::ifstream inputFile(inputFileName);
+	guidingSetsGenerator.ReadRules(inputFile);
+	std::string outputFileName = "output.txt";
+	std::ofstream outputFile(outputFileName);
+	guidingSetsGenerator.Generate();
+	guidingSetsGenerator.WriteResult(outputFile);
+	outputFile.close();
+
 	setlocale(LC_ALL, "Russian");
 	LLGenerator generator;
 
-	std::string inputFileName = "../GrammarExamples/grammar1.txt";
-	std::string outputFileName = "output.csv";
+	inputFileName = "output.txt";
+	outputFileName = "output.csv2";
 
 	if (!ReadInputFile(generator, inputFileName))
 		return -1;
@@ -57,17 +67,11 @@ int main()
 	if (!WriteOutputFile(table, outputFileName))
 		return -1;
 
-	/*GuidingSetsGenerator gen;
-	std::string inputFileName = "../GuidingSetsExamples/grammar1.txt";
-	std::ifstream inputFile(inputFileName);
-	gen.ReadRules(inputFile);
-	gen.Generate();*/
-
 	std::string program;
 	std::cout << "Enter program: ";
 	getline(std::cin, program);
 
-	std::ifstream inputTable("output.csv");
+	std::ifstream inputTable("output.csv2");
 	SyntaxSlider syntaxSlider(inputTable, program);
 	syntaxSlider.Parse();
 
