@@ -56,7 +56,7 @@ int main()
 	LLGenerator generator;
 
 	inputFileName = "output.txt";
-	outputFileName = "output.csv2";
+	outputFileName = "output2.csv";
 
 	if (!ReadInputFile(generator, inputFileName))
 		return -1;
@@ -71,7 +71,7 @@ int main()
 	std::cout << "Enter program: ";
 	getline(std::cin, program);
 
-	std::ifstream inputTable("output.csv2");
+	std::ifstream inputTable("output2.csv");
 	SyntaxSlider syntaxSlider(inputTable, program);
 	syntaxSlider.Parse();
 
