@@ -1,1 +1,7 @@
-<S> - if <Exp> then <S1> else <S> / if
+<S> - <A> <B> <C> = / a, b, c, =
+<A> - a <A> / a
+<A> - e / b, c, =
+<B> - b <B> / b
+<B> - e / c, =
+<C> - c <C> / c
+<C> - e / =

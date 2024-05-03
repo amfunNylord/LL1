@@ -68,7 +68,7 @@ int main()
 		return -1;
 
 	std::string program;
-	std::cout << "Enter program: ";
+	std::cout << "¬ведите строку: ";
 	getline(std::cin, program);
 
 	std::ifstream inputTable("output2.csv");

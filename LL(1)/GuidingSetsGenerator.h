@@ -1,11 +1,11 @@
 #pragma once
+#include "Utils.h"
 #include <fstream>
-#include <vector>
-#include <string>
-#include <sstream>
 #include <iostream>
 #include <set>
-#include "Utils.h"
+#include <sstream>
+#include <string>
+#include <vector>
 
 class GuidingSetsGenerator
 {
@@ -21,9 +21,11 @@ public:
 private:
 	std::string GetEl(const std::string& line);
 	void RemoveEl(std::string& line, const std::string& el);
-	void GetGuidingSetsOfNonTerminal(size_t row);
-	void GetGuidingSetsForEmpty(const std::string& nonTerminal, const size_t& row);
-	std::set<std::string> GetGuidingSet(const std::string& nonTerminal);
+
+	bool IsGuidingSetsFilled() const;
+
+	void NonTerminalHandle(const std::string& el, const size_t& i);
+	void EmptyHandle(const std::string& el, const size_t& guidingSetId, const size_t& elIndex);
 
 	std::vector<std::string> m_nonTerminals;
 	std::vector<std::string> m_rightSidesOfRule;

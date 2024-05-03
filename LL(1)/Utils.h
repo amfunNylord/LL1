@@ -19,7 +19,7 @@ inline void Trim(std::string& str)
 
 inline bool IsNonTerminal(const std::string& el)
 {
-	return (el.size() >= 2 && el[0] == '<' && el[el.size() - 1] == '>') ? true : false;
+	return (el.size() >= 2 && el[0] == '<' && el[el.size() - 1] == '>');
 }
 
 #endif
