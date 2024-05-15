@@ -30,6 +30,9 @@
     <ClCompile Include="SyntaxSlider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RemoveLeftRecursionAndFewWays.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LLGenerator.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SyntaxSlider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoveLeftRecursionAndFewWays.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

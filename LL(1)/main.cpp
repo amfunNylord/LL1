@@ -1,6 +1,7 @@
 #include "GuidingSetsGenerator.h"
 #include "LLGenerator.h"
 #include "SyntaxSlider.h"
+#include "RemoveLeftRecursionAndFewWays.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -43,8 +44,11 @@ bool WriteOutputFile(const Table& table, const std::string& outputFileName)
 int main()
 {
 	GuidingSetsGenerator guidingSetsGenerator;
-	std::string inputFileName = "../GuidingSetsExamples/grammar1.txt";
+	std::string inputFileName = "../GuidingSetsExamples/test.txt";	// grammar.txt
 	std::ifstream inputFile(inputFileName);
+	//RemoveLeftRecursionAndFewWays(inputFile);
+
+	inputFileName = OUTPUT_FILE_NAME;
 	guidingSetsGenerator.ReadRules(inputFile);
 	std::string outputFileName = "output.txt";
 	std::ofstream outputFile(outputFileName);
