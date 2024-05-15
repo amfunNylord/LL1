@@ -52,7 +52,16 @@ void SyntaxSlider::Parse()
 		program.emplace_back(terminal);
 	}
 	int currIndex = 1;
-	std::string currTerminal = program[0];
+
+	std::string currTerminal;
+	if (program.empty())
+	{
+		currTerminal = "=";
+	}
+	else
+	{
+		currTerminal = program[0];
+	}
 
 	while (true)
 	{
